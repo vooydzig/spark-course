@@ -1,0 +1,3 @@
+#/bin/bash
+
+docker-compose exec spark-master spark-submit /jobs/$1.py
