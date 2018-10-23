@@ -1,12 +1,13 @@
 import os
-from pyspark.sql import SparkSession
+
 from pyspark.sql.types import StructField, IntegerType, StringType, StructType
 
-from config import DATA_DIR
+from config import DATA_DIR, setup
 
 INPUT = os.path.join(DATA_DIR, 'people.json')
 
-spark = SparkSession.builder.appName("Basics").getOrCreate()
+spark = setup("Basics")
+
 df = spark.read.json(INPUT)
 df.printSchema()
 df.show()

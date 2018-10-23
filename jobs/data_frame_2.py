@@ -1,16 +1,8 @@
 import os
 
-from pyspark.sql import SparkSession
-
-from config import DATA_DIR
+from config import DATA_DIR, setup
 
 INPUT = os.path.join(DATA_DIR, 'appl_stock.csv')
-
-
-def setup():
-    spark = SparkSession.builder.appName("BasicOps").getOrCreate()
-    spark.sparkContext.setLogLevel("ERROR")
-    return spark
 
 
 def filter_sql(df):
@@ -29,7 +21,7 @@ def get_by_low_value(df, val):
     return df.filter(df['Low'] == val).collect()
 
 
-spark = setup()
+spark = setup("BasicOps")
 df = spark.read.csv(INPUT, inferSchema=True, header=True)
 
 filter_sql(df).select(['Open', 'Close']).show()
